@@ -923,8 +923,10 @@
       let { element: t } = this;
       t && j(T).forEach(n => {
         let r = t.querySelector(T[n]);
-        r && (r.setAttribute("role", "button"), r.setAttribute("tabindex",
-          "0"))
+        // Skip elements that already are or contain a native button or link,
+        // otherwise screen readers get two nested buttons.
+        r && !r.matches("a[href], button") && !r.querySelector("a[href], button") &&
+          (r.setAttribute("role", "button"), r.setAttribute("tabindex", "0"))
       })
     }
     listenEvents() {
